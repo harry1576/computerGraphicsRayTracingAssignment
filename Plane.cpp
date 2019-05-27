@@ -29,10 +29,10 @@ bool Plane::isInside(glm::vec3 pt)
     UcCrossVc = glm::cross((d-c),(pt-c));
     UdCrossVd = glm::cross((a-d),(pt-d));
 
-    int parameter1 = glm::dot(UaCrossVa,n);
-    int parameter2 = glm::dot(UbCrossVb,n);
-    int parameter3 = glm::dot(UcCrossVc,n);
-    int parameter4 = glm::dot(UdCrossVd,n);
+    float parameter1 = glm::dot(UaCrossVa,n);
+    float parameter2 = glm::dot(UbCrossVb,n);
+    float parameter3 = glm::dot(UcCrossVc,n);
+    float parameter4 = glm::dot(UdCrossVd,n);
 
 
     if(parameter1 > 0 && parameter2 > 0 && parameter3 > 0 && parameter4 > 0)
@@ -41,7 +41,7 @@ bool Plane::isInside(glm::vec3 pt)
     }
     else
     {
-		return false;
+        return false;
     }
 
 
@@ -79,16 +79,10 @@ glm::vec3 Plane::normal(glm::vec3 pt)
 
      n = glm::cross((b-a),(d-a));
      n = glm::normalize(n);
-    //=== Complete this function ==== 
+    //=== Complete this function ====
 
     return n;
 }
-
-int getColourAt(float s, float t)
-{
-	
-	return 0;
-};
 
 
 
