@@ -20,11 +20,10 @@ private:
 public:	
 	Plane(void);
 	
-    Plane(glm::vec3 pa, glm::vec3 pb, glm::vec3 pc, glm::vec3 pd, glm::vec3 col1,glm::vec3 col2)
+    Plane(glm::vec3 pa, glm::vec3 pb, glm::vec3 pc, glm::vec3 pd, glm::vec3 col1)
 		: a(pa), b(pb), c(pc), d(pd)
 	{
 		color = col1;
-		color2 = col2;
 	};
 
 	bool isInside(glm::vec3 pt);

@@ -29,6 +29,8 @@ const float YMIN = -HEIGHT * 0.5;
 const float YMAX =  HEIGHT * 0.5;
 const float phong = 10;
 
+int rowcount = 0;
+
 
 vector<SceneObject*> sceneObjects;  //A global list containing pointers to objects in the scene
 
@@ -60,11 +62,27 @@ glm::vec3 trace(Ray ray, int step)
     materialCol = sceneObjects[ray.xindex]->getColor(); //else return object's colour
     
     
+  
+	
+   // if(ray.xpt.y > 0){std::cout << ray_y << endl;}
+    
     if(ray.xindex == 1)
     {	
-		if(ray.xpt.x > 0.1)
+		
+		int ray_x = ((ray.xpt.x)/4)+10;
+		
+		int ray_z = -(ray.xpt.z/10);
+		
+		//std::cout << ray_z << endl;
+		
+		if(ray_z % 2 == 0 && ray_x % 2 == 0)
 		{	
 			materialCol = glm::vec3(0.5, 0.15, 0.15); 
+		}
+		else if(ray_z % 2 == 1 &&ray_x % 2 == 1)
+		{
+			materialCol = glm::vec3(0.5, 0.15, 0.15); 
+
 		}
 		else
 		{
@@ -190,13 +208,112 @@ void initialize()
     //Point C
     glm::vec3(-20., -20, -200),
     //Point D
-    glm::vec3(0.5, 0.5, 0),
+    glm::vec3(0.5, 0.5, 0));
     //Colour 1
-    glm::vec3(0.5, 0.0, 0.5));
+  
     //Colour 1
     //Point D
     sceneObjects.push_back(plane);
+    
+    glm::vec3 backUR = glm::vec3(10.0, -10.0, -100.0); // back upper right
+    glm::vec3 backUL = glm::vec3(5.0, -10.0, -100.0); // back upper left
+    glm::vec3 backBL = glm::vec3(5.0, -15.0, -100.0); // back bottom left
+    glm::vec3 backBR = glm::vec3(10.0, -15.0, -100.0); // back bottom right
+    glm::vec3 frontUR = glm::vec3(10.0, -10.0, -95.0);
+    glm::vec3 frontUL = glm::vec3(5.0, -10.0, -95.0);
+    glm::vec3 frontBL = glm::vec3(5.0, -15.0, -95.0);//
+    glm::vec3 frontBR = glm::vec3(10.0, -15.0, -95.0);//
+    
+    Plane *squarebottom = new Plane (
+    backBL,
+    //Point A
+    frontBL,
+    //Point B
+    frontBR,
+    //Point C
+    backBR,
+    //Point D
+    //Colour 1
+    glm::vec3(0.0, 1.0, 0.0));
+    //Colour 1
+    //Point D
+    sceneObjects.push_back(squarebottom);
+    
+    Plane *squaretop = new Plane (
+    backUL,
+    //Point A
+    frontUL,
+    //Point B
+    frontUR,
+    //Point C
+    backUR,
+    //Colour 1
+    glm::vec3(0.0, 1.0, 0.0));
+    //Colour 1
+    //Point D
+    sceneObjects.push_back(squaretop);
+    
+    Plane *squareback = new Plane (
+    backUR,
+    //Point A
+    backUL,
+    //Point B
+    backBL,
+    //Point C
+    backBR,
+    //Point D
+    //Colour 1
+    glm::vec3(0.0, 1.0, 0.0));
+    //Colour 1
+    //Point D
+    sceneObjects.push_back(squareback);
+    
+    Plane *squarefront = new Plane (
+    frontBL,
+    //Point A
+    frontBR,
+    //Point B
+    frontUR,
+    //Point C
+    frontUL,
+    //Point D
+    //Colour 1
+    glm::vec3(0.0, 1.0, 0.0));
+    //Colour 1
+    //Point D
+    sceneObjects.push_back(squarefront);
+    
+    
+    Plane *squareleft = new Plane (
+    backBL,
+    //Point A
+    frontBL,
+    //Point B
+    frontUL,
+    //Point C
+    backUL,
+    //Point D
 
+    //Colour 1
+    glm::vec3(0.0, 1.0, 0.0));
+    //Colour 1
+    //Point D
+    sceneObjects.push_back(squareleft);
+    
+    Plane *squareright = new Plane (
+    backBR,
+    //Point A
+    frontBR,
+    //Point B
+    frontUR,
+    //Point C
+    backUR,
+    //Colour 1
+    glm::vec3(0.0, 1.0, 0.0));
+    //Colour 1
+    //Point D
+    sceneObjects.push_back(squareright);
+    
 
 }
 
