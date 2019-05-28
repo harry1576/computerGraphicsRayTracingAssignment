@@ -369,7 +369,7 @@ void initialize()
     sceneObjects.push_back(sphererefract);
     
     
-    Cylinder *cyclinder = new Cylinder(glm::vec3(8.0, -15.0, -100.0),2.0,10.0, glm::vec3(0.5, 0.1, 0.4));
+    Cylinder *cyclinder = new Cylinder(glm::vec3(-12.0, -20.0, -120.0),2.0,15.0, glm::vec3(0.8, 0.1, 0.6));
     //--Add the above to the list of scene objects.
     sceneObjects.push_back(cyclinder);
 

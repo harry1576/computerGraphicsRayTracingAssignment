@@ -24,39 +24,16 @@ float Cylinder::intersect(glm::vec3 posn, glm::vec3 dir)
     if(delta < 0.0) return -1.0;
 	
 	
-	float t;
     float t1 = (-b - sqrt(delta))/(2*a);
     float t2 = (-b + sqrt(delta))/(2*a);
-   
-    if(fabs(t1) < 0.001 )
-    {
-        if (t2 > 0) t = t2;
-        else t1 = -1.0;
-    }
-    if(fabs(t2) < 0.001 ) t2 = -1.0;
+	float smallest;
 	
-	if(t1 == -1 && t2 == -1)
-	{ return -1;}
+	if(t1 > t2){smallest = t2;}
+	else{smallest = t1;}
 	
-	if(t1 > t2)
-	{
-		if(posn.y + (dir.y * t1) > height)
-			{t = -1;}
-			else{ t = t1;}
-		
-	}
-	else
-	{		if(posn.y + (dir.y * t2) > height)
-			{t = -1;}
-			else{ t = t2;}
-	}
+	if(center.y + height > posn.y + (dir.y * smallest) && center.y < posn.y + (dir.y * smallest) ){return smallest;}
+	else{ return -1;} 
 	
-	
-
-	
-	
-	
-	return t;
 }
 
 /**
