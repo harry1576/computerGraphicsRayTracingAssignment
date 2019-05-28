@@ -15,6 +15,7 @@
 #include <GL/glut.h>
 #include <iostream>
 #include <cmath>
+#include "Cylinder.h"
 
 using namespace std;
 
@@ -146,28 +147,30 @@ glm::vec3 trace(Ray ray, int step)
 	
     if(ray.xindex == 8)
     {	
+		
         Ray throughRay(ray.xpt, ray.dir);
-        throughRay.closestPt(sceneObjects);			
-		Ray throughRay2(throughRay.xpt, throughRay.dir);
+        throughRay.closestPt(sceneObjects);	
+          
+        
+		if(throughRay.xindex == 8)
+		{	
+			Ray throughRay2(throughRay.xpt, throughRay.dir);
+			throughRay2.closestPt(sceneObjects);
+			if(throughRay2.xindex == -1){return backgroundCol;}
+			else{ objectColor = trace(throughRay2,1) + objectColor * 0.3f;}
+		}
+		else
+		{
 		
+		if(throughRay.xindex == -1){return backgroundCol;}
+		else{objectColor = trace(throughRay,1) + objectColor * 0.4f;}
+		}
 		
-		glm::vec3 throughRaycol = trace(throughRay2,1);
-		
-		
-		
-		objectColor =  (throughRaycol) + (objectColor * 0.4f);
-			
 		
 
-		
-		
-
-		
     }
     
-    
-
-
+   
 
 
     return objectColor;
@@ -364,6 +367,11 @@ void initialize()
     Sphere *sphererefract = new Sphere(glm::vec3(5.0, -15.0, -85.0), 5.0, glm::vec3(0.5, 0.1, 0.4));
     //--Add the above to the list of scene objects.
     sceneObjects.push_back(sphererefract);
+    
+    
+    Cylinder *cyclinder = new Cylinder(glm::vec3(8.0, -15.0, -100.0),2.0,10.0, glm::vec3(0.5, 0.1, 0.4));
+    //--Add the above to the list of scene objects.
+    sceneObjects.push_back(cyclinder);
 
 }
 
