@@ -147,15 +147,20 @@ glm::vec3 trace(Ray ray, int step)
     if(ray.xindex == 8)
     {	
         Ray throughRay(ray.xpt, ray.dir);
-        throughRay.closestPt(sceneObjects);
-        if(throughRay.xindex == 8)
-        {	
+        throughRay.closestPt(sceneObjects);			
+		Ray throughRay2(throughRay.xpt, throughRay.dir);
+		
+		
+		glm::vec3 throughRaycol = trace(throughRay2,1);
+		
+		
+		
+		objectColor =  (throughRaycol) + (objectColor * 0.4f);
 			
-			Ray throughRay2(throughRay.xpt, throughRay.dir);
-			glm::vec3 throughRaycol = trace(throughRay2,1);
-			objectColor =  (throughRaycol) + (objectColor * 0.4f);
+		
 
-		}
+		
+		
 
 		
     }
