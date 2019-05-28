@@ -32,6 +32,10 @@ const float phong = 10;
 const float eta = 1.02;
 float transparency = 0.4;
 
+float fogstart = -10;
+float fogfinish = -60;
+bool fog = true;
+
 
 vector<SceneObject*> sceneObjects;  //A global list containing pointers to objects in the scene
 
@@ -43,14 +47,29 @@ vector<SceneObject*> sceneObjects;  //A global list containing pointers to objec
 glm::vec3 trace(Ray ray, int step)
 {
     glm::vec3 backgroundCol(0);
+    glm::vec3 fogCol(0.0055,0.0055,0.0055);
+
     glm::vec3 light(10, 40, -3);
     glm::vec3 ambientCol(0.2);   //Ambient color of light
 
     glm::vec3 objectColor(0);
     glm::vec3 materialCol(0);
     glm::vec3 throughcol(0);
+    glm::vec3 fogEffect(0);
+
 
     ray.closestPt(sceneObjects);        //Compute the closest point of intersetion of objects with the ray
+    if(fog){
+    float fogDist = -ray.xpt.z - fogstart;
+    if(fogDist > 60)
+    {
+		fogEffect = 60.0f *  fogCol;
+	}
+	else
+	{
+		fogEffect = fogDist * fogCol;
+	}
+	}
 
     if(ray.xindex == -1) {return backgroundCol;}      //If there is no intersection return background colour
 
@@ -108,7 +127,7 @@ glm::vec3 trace(Ray ray, int step)
 
     if ((shadow.xindex > -1 && shadow.xdist <  glm::length(lightVector2))|| lDotn <= 0)
     {
-        objectColor =  ambientCol*materialCol ;
+        objectColor =  ambientCol*materialCol  ;
     }
     else
     {
@@ -138,7 +157,7 @@ glm::vec3 trace(Ray ray, int step)
 
 		glm::vec3 refracCol2 = trace(refracRay2,1);
 		objectColor = objectColor * transparency + refracCol2*(1-transparency); //transparent object
-		return objectColor;
+		return objectColor + fogEffect;
         
     }
     
@@ -173,7 +192,7 @@ glm::vec3 trace(Ray ray, int step)
    
 
 
-    return objectColor;
+    return objectColor + fogEffect;
 
 
 
@@ -374,7 +393,9 @@ void initialize()
     sceneObjects.push_back(cyclinder);
 
 }
-
+// does box need spccular lighting?
+// how to make shadows lighter on spheres?
+// can I have multiple shapes for points?
 
 
 int main(int argc, char *argv[]) {
