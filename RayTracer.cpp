@@ -34,7 +34,8 @@ float transparency = 0.4;
 
 float fogstart = -10;
 float fogfinish = -60;
-bool fog = true;
+float fogmax = 220.0f;
+bool fog = false;
 
 
 vector<SceneObject*> sceneObjects;  //A global list containing pointers to objects in the scene
@@ -47,7 +48,6 @@ vector<SceneObject*> sceneObjects;  //A global list containing pointers to objec
 glm::vec3 trace(Ray ray, int step)
 {
     glm::vec3 backgroundCol(0);
-    glm::vec3 fogCol(0.0055,0.0055,0.0055);
 
     glm::vec3 light(10, 40, -3);
     glm::vec3 ambientCol(0.2);   //Ambient color of light
@@ -59,17 +59,7 @@ glm::vec3 trace(Ray ray, int step)
 
 
     ray.closestPt(sceneObjects);        //Compute the closest point of intersetion of objects with the ray
-    if(fog){
-    float fogDist = -ray.xpt.z - fogstart;
-    if(fogDist > 60)
-    {
-		fogEffect = 60.0f *  fogCol;
-	}
-	else
-	{
-		fogEffect = fogDist * fogCol;
-	}
-	}
+
 
     if(ray.xindex == -1) {return backgroundCol;}      //If there is no intersection return background colour
 
@@ -127,13 +117,19 @@ glm::vec3 trace(Ray ray, int step)
 
     if ((shadow.xindex > -1 && shadow.xdist <  glm::length(lightVector2))|| lDotn <= 0)
     {
-        objectColor =  ambientCol*materialCol  ;
+        if(shadow.xindex == 9 || shadow.xindex == 8)
+        {
+        objectColor =  ambientCol*materialCol  * 2.5f ;
+        }
+        else{
+            objectColor =  ambientCol*materialCol;
+            }
     }
     else
     {
         objectColor = ambientCol*materialCol + lDotn*materialCol + specularTerm * glm::vec3(1);
     }
-    
+
 
     if(ray.xindex == 0 && step < MAX_STEPS)
     {
@@ -142,57 +138,62 @@ glm::vec3 trace(Ray ray, int step)
         glm::vec3 reflectedCol = trace(reflectedRay, step+1); //Recursion!
         objectColor += (0.8f*reflectedCol);
     }
-	
-	if(ray.xindex == 9) // refraction
+
+    if(ray.xindex == 9) // refraction
     {
 
         glm::vec3 refracteddir = glm::refract(ray.dir, normalVector,1.0f/eta);
         Ray refrRay(ray.xpt, refracteddir);
         refrRay.closestPt(sceneObjects);
 
-		glm::vec3 normalVector2 = sceneObjects[refrRay.xindex]->normal(refrRay.xpt); 
-		glm::vec3 refracDir2 = glm::refract(refracteddir, -normalVector2, eta);
-		Ray refracRay2(refrRay.xpt,refracDir2);
-		refracRay2.closestPt(sceneObjects);
+        glm::vec3 normalVector2 = sceneObjects[refrRay.xindex]->normal(refrRay.xpt);
+        glm::vec3 refracDir2 = glm::refract(refracteddir, -normalVector2, eta);
+        Ray refracRay2(refrRay.xpt,refracDir2);
+        refracRay2.closestPt(sceneObjects);
 
-		glm::vec3 refracCol2 = trace(refracRay2,1);
-		objectColor = objectColor * transparency + refracCol2*(1-transparency); //transparent object
-		return objectColor + fogEffect;
-        
+        glm::vec3 refracCol2 = trace(refracRay2,1);
+        objectColor = objectColor * transparency + refracCol2*(1-transparency); //transparent object
+
     }
-    
-    
-  
-	
+
+
+
+
     if(ray.xindex == 8)
-    {	
-		
+    {
+
         Ray throughRay(ray.xpt, ray.dir);
-        throughRay.closestPt(sceneObjects);	
-          
-        
-		if(throughRay.xindex == 8)
-		{	
-			Ray throughRay2(throughRay.xpt, throughRay.dir);
-			throughRay2.closestPt(sceneObjects);
-			if(throughRay2.xindex == -1){return backgroundCol;}
-			else{ objectColor = trace(throughRay2,1) + objectColor * 0.3f;}
-		}
-		else
-		{
-		
-		if(throughRay.xindex == -1){return backgroundCol;}
-		else{objectColor = trace(throughRay,1) + objectColor * 0.4f;}
-		}
-		
-		
+        throughRay.closestPt(sceneObjects);
+
+
+        if(throughRay.xindex == 8)
+        {
+            Ray throughRay2(throughRay.xpt, throughRay.dir);
+            throughRay2.closestPt(sceneObjects);
+            if(throughRay2.xindex == -1){return backgroundCol;}
+            else{ objectColor = trace(throughRay2,1) + (objectColor * 0.25f);}
+        }
+        else
+        {
+
+        if(throughRay.xindex == -1){return backgroundCol;}
+        else{objectColor = trace(throughRay,1) + (objectColor * 0.25f);}
+        }
+
+
 
     }
-    
-   
 
+    if(fog){
+        float fogDist = -ray.xpt.z - fogstart;
+        objectColor.x += (fogDist/fogmax)*(1 - objectColor.x);
+        objectColor.y += (fogDist/fogmax)*(1 - objectColor.y);
+        objectColor.z += (fogDist/fogmax)*(1 - objectColor.z);
+        return objectColor;
 
-    return objectColor + fogEffect;
+    }
+
+    return objectColor;
 
 
 
@@ -260,7 +261,7 @@ void initialize()
     glClearColor(0, 0, 0, 1);
 
     //-- Create a pointer to a sphere object
-    Sphere *sphere1 = new Sphere(glm::vec3(-5.0, -5.0, -150.0), 15.0, glm::vec3(0, 0, 1));
+    Sphere *sphere1 = new Sphere(glm::vec3(-1.0, -5.0, -150.0), 15.0, glm::vec3(0, 0, 1));
     //--Add the above to the list of scene objects.
     sceneObjects.push_back(sphere1);
 
@@ -279,14 +280,14 @@ void initialize()
     //Point D
     sceneObjects.push_back(plane);
 
-    glm::vec3 backUR = glm::vec3(15.0, -10.0, -115.0); // back upper right
-    glm::vec3 backUL = glm::vec3(10.0, -10.0, -115.0); // back upper left
-    glm::vec3 backBL = glm::vec3(10.0, -15.0, -115.0); // back bottom left
-    glm::vec3 backBR = glm::vec3(15.0, -15.0, -115.0); // back bottom right
-    glm::vec3 frontUR = glm::vec3(15.0, -10.0, -105.0);
-    glm::vec3 frontUL = glm::vec3(10.0, -10.0, -105.0);
-    glm::vec3 frontBL = glm::vec3(10.0, -15.0, -105.0);//
-    glm::vec3 frontBR = glm::vec3(15.0, -15.0, -105.0);//
+    glm::vec3 backUR = glm::vec3(18.0, -15.0, -115.0); // back upper right
+    glm::vec3 backUL = glm::vec3(13.0, -15.0, -115.0); // back upper left
+    glm::vec3 backBL = glm::vec3(13.0, -20.0, -115.0); // back bottom left
+    glm::vec3 backBR = glm::vec3(18.0, -20.0, -115.0); // back bottom right
+    glm::vec3 frontUR = glm::vec3(18.0, -15.0, -105.0);
+    glm::vec3 frontUL = glm::vec3(13.0, -15.0, -105.0);
+    glm::vec3 frontBL = glm::vec3(13.0, -20.0, -105.0);//
+    glm::vec3 frontBR = glm::vec3(18.0, -20.0, -105.0);//
 
     Plane *squarebottom = new Plane (
     backBL,
@@ -379,15 +380,15 @@ void initialize()
 
 
 
-    Sphere *spheretransparent = new Sphere(glm::vec3(-8.0, -15.0, -85.0), 3.0, glm::vec3(0.5, 1, 0));
+    Sphere *spheretransparent = new Sphere(glm::vec3(-8.0, -15.0, -85.0), 5.0, glm::vec3(0.5, 1, 0));
     //--Add the above to the list of scene objects.
     sceneObjects.push_back(spheretransparent);
-    
-    Sphere *sphererefract = new Sphere(glm::vec3(5.0, -15.0, -85.0), 5.0, glm::vec3(0.5, 0.1, 0.4));
+
+    Sphere *sphererefract = new Sphere(glm::vec3(4.0, -14.0, -99.0), 6, glm::vec3(0.5, 0.1, 0.4));
     //--Add the above to the list of scene objects.
     sceneObjects.push_back(sphererefract);
-    
-    
+
+
     Cylinder *cyclinder = new Cylinder(glm::vec3(-12.0, -20.0, -120.0),2.0,15.0, glm::vec3(0.8, 0.1, 0.6));
     //--Add the above to the list of scene objects.
     sceneObjects.push_back(cyclinder);
