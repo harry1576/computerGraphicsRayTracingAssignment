@@ -84,16 +84,16 @@ glm::vec3 trace(Ray ray, int step)
 
         if(ray_z % 2 == 0 && ray_x % 2 == 0)
         {
-            materialCol = glm::vec3(0.5, 0.15, 0.15);
+            materialCol = glm::vec3(0.6, 0.4, 0.4);
         }
         else if(ray_z % 2 == 1 &&ray_x % 2 == 1)
         {
-            materialCol = glm::vec3(0.6, 0.15, 0.15);
+            materialCol = glm::vec3(0.6, 0.4, 0.4);
 
         }
         else
         {
-            materialCol = glm::vec3(0.0, 0.15, 0.15);
+            materialCol = glm::vec3(0.8, 0.8, 0.85);
         }
     }
 
@@ -120,7 +120,7 @@ glm::vec3 trace(Ray ray, int step)
     {
         if(shadow.xindex == 9 || shadow.xindex == 8)
         {
-        objectColor =  ambientCol*materialCol  * 2.5f ;
+        objectColor =  ambientCol*materialCol  * 2.95f ;
         }
         else{
             objectColor =  ambientCol*materialCol;
@@ -381,16 +381,16 @@ void initialize()
 
 
 
-    Sphere *spheretransparent = new Sphere(glm::vec3(8.0, -15.0, -85.0), 5.0, glm::vec3(0.5, 1, 0));
+    Sphere *spheretransparent = new Sphere(glm::vec3(10.0, -15.0, -85.0), 5.0, glm::vec3(0.5, 1, 0));
     //--Add the above to the list of scene objects.
     sceneObjects.push_back(spheretransparent);
 
-    Sphere *sphererefract = new Sphere(glm::vec3(4.0, -14.0, -99.0), 6, glm::vec3(0.5, 0.1, 0.4));
+    Sphere *sphererefract = new Sphere(glm::vec3(4.0, -14.0, -95.0), 6, glm::vec3(0.5, 0.1, 0.4));
     //--Add the above to the list of scene objects.
     sceneObjects.push_back(sphererefract);
 
 
-    Cylinder *cyclinder = new Cylinder(glm::vec3(-6.0, -20.0, -115.0),2.5,10.0, glm::vec3(0.8, 0.1, 0.6));
+    Cylinder *cyclinder = new Cylinder(glm::vec3(-7.0, -20.0, -125.0),2.5,10.0, glm::vec3(0.8, 0.1, 0.6));
     //--Add the above to the list of scene objects.
     sceneObjects.push_back(cyclinder);
     

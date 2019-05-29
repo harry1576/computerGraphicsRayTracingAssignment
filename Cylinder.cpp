@@ -27,12 +27,20 @@ float Cylinder::intersect(glm::vec3 posn, glm::vec3 dir)
     float t1 = (-b - sqrt(delta))/(2*a);
     float t2 = (-b + sqrt(delta))/(2*a);
 	float smallest;
+	float biggest;
 	
-	if(t1 > t2){smallest = t2;}
-	else{smallest = t1;}
+	if(t1 > t2){smallest = t2; biggest = t1;}
+	else{smallest = t1; biggest = t2;}
+
 	
-	if(center.y + height > posn.y + (dir.y * smallest) && center.y < posn.y + (dir.y * smallest) ){return smallest;}
+	if(center.y + height >= posn.y + (dir.y * smallest) && center.y <= posn.y + (dir.y * smallest) ){return smallest;}
+	
+	else if(center.y + height >= posn.y + (dir.y * biggest) && center.y <= posn.y + (dir.y * biggest)){return ((height + center.y) + posn.y )/ dir.y;}
+	
+	
 	else{ return -1;} 
+
+
 	
 }
 
