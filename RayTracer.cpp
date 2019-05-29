@@ -16,6 +16,7 @@
 #include <iostream>
 #include <cmath>
 #include "Cylinder.h"
+#include "Cone.h"
 
 using namespace std;
 
@@ -49,7 +50,7 @@ glm::vec3 trace(Ray ray, int step)
 {
     glm::vec3 backgroundCol(0);
 
-    glm::vec3 light(10, 40, -3);
+    glm::vec3 light(40, 35, -3);
     glm::vec3 ambientCol(0.2);   //Ambient color of light
 
     glm::vec3 objectColor(0);
@@ -380,7 +381,7 @@ void initialize()
 
 
 
-    Sphere *spheretransparent = new Sphere(glm::vec3(-8.0, -15.0, -85.0), 5.0, glm::vec3(0.5, 1, 0));
+    Sphere *spheretransparent = new Sphere(glm::vec3(8.0, -15.0, -85.0), 5.0, glm::vec3(0.5, 1, 0));
     //--Add the above to the list of scene objects.
     sceneObjects.push_back(spheretransparent);
 
@@ -389,9 +390,14 @@ void initialize()
     sceneObjects.push_back(sphererefract);
 
 
-    Cylinder *cyclinder = new Cylinder(glm::vec3(-12.0, -20.0, -120.0),2.0,15.0, glm::vec3(0.8, 0.1, 0.6));
+    Cylinder *cyclinder = new Cylinder(glm::vec3(-6.0, -20.0, -115.0),2.5,10.0, glm::vec3(0.8, 0.1, 0.6));
     //--Add the above to the list of scene objects.
     sceneObjects.push_back(cyclinder);
+    
+    Cone *Cone1 = new Cone(glm::vec3(-10.0, -20.0, -95.0),6.0,8.0, glm::vec3(0.95, 0.66, 0.25));
+    //--Add the above to the list of scene objects.
+    sceneObjects.push_back(Cone1);
+
 
 }
 // does box need spccular lighting?
