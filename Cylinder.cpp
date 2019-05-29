@@ -18,7 +18,6 @@ float Cylinder::intersect(glm::vec3 posn, glm::vec3 dir)
     float b = 2*(dir.x * (posn.x - center.x) + (dir.z*(posn.z-center.z)));
 	float c = (posn.x - center.x) * (posn.x-center.x) + (posn.z-center.z) * (posn.z-center.z) - (radius*radius); 
 	
-	float biggest;
 	
 	float delta = (b*b) - 4*(a*c);
    
@@ -39,18 +38,8 @@ float Cylinder::intersect(glm::vec3 posn, glm::vec3 dir)
 	
 	else if(center.y + height >= posn.y + (dir.y * biggest) && center.y <= posn.y + (dir.y * biggest)){return ((height + center.y) + posn.y )/ dir.y;}
 	
-<<<<<<< HEAD
-	
-=======
-	if(t1 > t2){smallest = t2;biggest=t1;}
-	else{smallest = t1;biggest=t2;}
-	
-	if(center.y + height > posn.y + (dir.y * smallest) && center.y < posn.y + (dir.y * smallest) ){return smallest;}
-	
-	else if(center.y + height > posn.y + (dir.y * biggest)){return biggest;}
-	
-	
->>>>>>> 71165b01947b97ad01aa57c142e9f2ba502c1ca9
+
+
 	else{ return -1;} 
 
 

@@ -50,7 +50,7 @@ glm::vec3 trace(Ray ray, int step)
 {
     glm::vec3 backgroundCol(0);
 
-    glm::vec3 light(40, 55, -3);
+    glm::vec3 light(45, 45, -3);
     glm::vec3 ambientCol(0.2);   //Ambient color of light
 
     glm::vec3 objectColor(0);
@@ -120,11 +120,7 @@ glm::vec3 trace(Ray ray, int step)
     {
         if(shadow.xindex == 9 || shadow.xindex == 8)
         {
-<<<<<<< HEAD
-        objectColor =  ambientCol*materialCol  * 2.95f ;
-=======
         objectColor =  ambientCol*materialCol  * 3.0f ;
->>>>>>> 71165b01947b97ad01aa57c142e9f2ba502c1ca9
         }
         else{
             objectColor =  ambientCol*materialCol;
@@ -397,15 +393,12 @@ void initialize()
     sceneObjects.push_back(sphererefract);
 
 
-<<<<<<< HEAD
-    Cylinder *cyclinder = new Cylinder(glm::vec3(-7.0, -20.0, -125.0),2.5,10.0, glm::vec3(0.8, 0.1, 0.6));
-=======
-    Cylinder *cyclinder = new Cylinder(glm::vec3(-10, -20.0, -85.0),4,10.0, glm::vec3(0.8, 0.1, 0.6));
->>>>>>> 71165b01947b97ad01aa57c142e9f2ba502c1ca9
+
+    Cylinder *cyclinder = new Cylinder(glm::vec3(-10, -20.0, -115.0),2,8.0, glm::vec3(0.8, 0.1, 0.6));
     //--Add the above to the list of scene objects.
     sceneObjects.push_back(cyclinder);
     
-    Cone *Cone1 = new Cone(glm::vec3(-10.0, -20.0, -120.0),6.0,8.0, glm::vec3(0.95, 0.66, 0.25));
+    Cone *Cone1 = new Cone(glm::vec3(-10.0, -20.0, -90.0),6.0,8.0, glm::vec3(0.95, 0.66, 0.25));
     //--Add the above to the list of scene objects.
     sceneObjects.push_back(Cone1);
 
