@@ -23,7 +23,7 @@ using namespace std;
 const float WIDTH = 20.0;
 const float HEIGHT = 20.0;
 const float EDIST = 40.0;
-const int NUMDIV = 500;
+const int NUMDIV = 1000;
 const int MAX_STEPS = 5;
 const float XMIN = -WIDTH * 0.5;
 const float XMAX =  WIDTH * 0.5;
@@ -35,8 +35,8 @@ float transparency = 0.4;
 
 float fogstart = -10;
 float fogfinish = -60;
-float fogmax = 220.0f;
-bool fog = false;
+float fogmax = 165.0f;
+bool fog = true;
 
 
 vector<SceneObject*> sceneObjects;  //A global list containing pointers to objects in the scene
@@ -384,11 +384,11 @@ void initialize()
 
 
 
-    Sphere *spheretransparent = new Sphere(glm::vec3(10.0, -15.0, -85.0), 5.0, glm::vec3(0.5, 1, 0));
+    Sphere *spheretransparent = new Sphere(glm::vec3(8.0, -15.0, -85.0), 5.0, glm::vec3(0.5, 1, 0));
     //--Add the above to the list of scene objects.
     sceneObjects.push_back(spheretransparent);
 
-    Sphere *sphererefract = new Sphere(glm::vec3(4.0, -14.0, -95.0), 6, glm::vec3(0.5, 0.1, 0.4));
+    Sphere *sphererefract = new Sphere(glm::vec3(1.0, -14.0, -95.0), 6, glm::vec3(0.5, 0.1, 0.4));
     //--Add the above to the list of scene objects.
     sceneObjects.push_back(sphererefract);
 

@@ -36,7 +36,7 @@ float Cylinder::intersect(glm::vec3 posn, glm::vec3 dir)
 	
 	if(center.y + height >= posn.y + (dir.y * smallest) && center.y <= posn.y + (dir.y * smallest) ){return smallest;}
 	
-	else if(center.y + height >= posn.y + (dir.y * biggest) && center.y <= posn.y + (dir.y * biggest)){return ((height + center.y) + posn.y )/ dir.y;}
+	else if(center.y + height >= posn.y + (dir.y * biggest) && center.y <= posn.y + (dir.y * biggest) && posn.y >= center.y + height){return (center.y + height - posn.y)/dir.y;}
 	
 
 
