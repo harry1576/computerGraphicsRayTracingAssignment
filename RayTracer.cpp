@@ -36,7 +36,7 @@ float transparency = 0.4;
 
 float fogstart = -10;
 float fogfinish = -60;
-float fogmax = 165.0f;
+float fogmax = 400.0f;
 bool fog = false;
 
 
@@ -539,6 +539,24 @@ void initialize()
 }
 
 
+void keyBoard (unsigned char key, int x, int y)
+{
+    if (key == 'f')
+    {
+			fog = true;
+			glutPostRedisplay();
+    }
+    else if (key == 'c')
+    {
+			fog = false;
+			glutPostRedisplay();
+    }
+    
+
+}
+
+
+
 
 int main(int argc, char *argv[]) {
     glutInit(&argc, argv);
@@ -546,9 +564,12 @@ int main(int argc, char *argv[]) {
     glutInitWindowSize(500, 500);
     glutInitWindowPosition(20, 20);
     glutCreateWindow("Raytracer hdo27");
+    
 
     glutDisplayFunc(display);
     initialize();
+	glutKeyboardFunc(keyBoard);
+
 
     glutMainLoop();
     return 0;
