@@ -17,13 +17,14 @@
 #include <cmath>
 #include "Cylinder.h"
 #include "Cone.h"
+#include "TextureBMP.h"
 
 using namespace std;
 
 const float WIDTH = 20.0;
 const float HEIGHT = 20.0;
 const float EDIST = 40.0;
-const int NUMDIV = 1000;
+const int NUMDIV = 500;
 const int MAX_STEPS = 5;
 const float XMIN = -WIDTH * 0.5;
 const float XMAX =  WIDTH * 0.5;
@@ -36,8 +37,12 @@ float transparency = 0.4;
 float fogstart = -10;
 float fogfinish = -60;
 float fogmax = 165.0f;
-bool fog = true;
+bool fog = false;
 
+
+//TextureBMP texture1;
+
+TextureBMP texture1 = TextureBMP((char*)"jupiter.bmp");
 
 vector<SceneObject*> sceneObjects;  //A global list containing pointers to objects in the scene
 
@@ -185,6 +190,17 @@ glm::vec3 trace(Ray ray, int step)
 
     }
     
+    if(ray.xindex == 12)
+    {
+		glm::vec3 centerPoint(-10.0, 5.0, -80.0);
+		glm::vec3 UnitVectorToSphereOrigin = glm::normalize(ray.xpt - centerPoint); 
+		
+		float s = 0.5f + atan2f(UnitVectorToSphereOrigin.z,UnitVectorToSphereOrigin.x)/(2 * M_PI);
+		float t = 0.5f - asin(UnitVectorToSphereOrigin.y)/M_PI;
+		
+		objectColor = texture1.getColorAt(s, t);		
+
+	}
     
     
 
@@ -401,6 +417,11 @@ void initialize()
     Cone *Cone1 = new Cone(glm::vec3(-10.0, -20.0, -90.0),6.0,8.0, glm::vec3(0.95, 0.66, 0.25));
     //--Add the above to the list of scene objects.
     sceneObjects.push_back(Cone1);
+    
+    Sphere *picturesphere = new Sphere(glm::vec3(-10.0, 5.0, -80.0), 4, glm::vec3(0.5, 0.1, 0.4));
+    //--Add the above to the list of scene objects.
+    sceneObjects.push_back(picturesphere);
+    
 
 
 }
