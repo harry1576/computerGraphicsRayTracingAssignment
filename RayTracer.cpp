@@ -18,7 +18,7 @@
 #include "Cylinder.h"
 #include "Cone.h"
 #include "TextureBMP.h"
-
+#include <glm/gtc/matrix_transform.hpp>
 using namespace std;
 
 const float WIDTH = 20.0;
@@ -55,7 +55,7 @@ glm::vec3 trace(Ray ray, int step)
 {
     glm::vec3 backgroundCol(0);
 
-    glm::vec3 light(45, 45, -3);
+    glm::vec3 light(45, 40, -5);
     glm::vec3 ambientCol(0.2);   //Ambient color of light
 
     glm::vec3 objectColor(0);
@@ -281,17 +281,17 @@ void initialize()
     glClearColor(0, 0, 0, 1);
 
     //-- Create a pointer to a sphere object
-    Sphere *sphere1 = new Sphere(glm::vec3(-1.0, -5.0, -150.0), 15.0, glm::vec3(0, 0, 1));
+    Sphere *sphere1 = new Sphere(glm::vec3(10.0, -5.0, -150.0), 15.0, glm::vec3(0, 0, 1));
     //--Add the above to the list of scene objects.
     sceneObjects.push_back(sphere1);
 
-    Plane *plane = new Plane (glm::vec3(-20., -20, -40),
+    Plane *plane = new Plane (glm::vec3(-40., -20, -40),
     //Point A
-    glm::vec3(20., -20, -40),
+    glm::vec3(40., -20, -40),
     //Point B
-    glm::vec3(20., -20, -200),
+    glm::vec3(40., -20, -500),
     //Point C
-    glm::vec3(-20., -20, -200),
+    glm::vec3(-40., -20, -500),
     //Point D
     glm::vec3(0.5, 0.5, 0));
     //Colour 1
@@ -301,21 +301,17 @@ void initialize()
     sceneObjects.push_back(plane);
     
 
-	float angle = 45;
-	
-	
-    glm::vec3 backUR = glm::vec3(18.0 + (5 * tan(0.52)), -15.0, -115.0); // back upper right
-    glm::vec3 backUL = glm::vec3(13.0 + (5 * tan(0.52)), -15.0, -115.0); // back upper left
-    glm::vec3 backBL = glm::vec3(13.0, -20.0, -115.0); // back bottom left
-    glm::vec3 backBR = glm::vec3(18.0, -20.0, -115.0); // back bottom right
-    glm::vec3 frontUR = glm::vec3(18.0 + (5 * tan(0.52)), -15.0, -105.0);
-    glm::vec3 frontUL = glm::vec3(13.0 + (5 * tan(0.52)), -15.0, -105.0);
-    glm::vec3 frontBL = glm::vec3(13.0, -20.0, -105.0);//
-    glm::vec3 frontBR = glm::vec3(18.0, -20.0, -105.0);//
-    
-    
-
-
+   float angle = 0.55;
+   glm::vec3 Box1Position = glm::vec3(19.5 , -17.5, -115.0);
+   
+   glm::vec3 backUR = (0.5f * glm::vec3((5.0 * cos(angle)) + (5.0 * sin(angle)), 5.0 , (-5.0 * sin(angle)) + (5.0 * cos(angle)))) + Box1Position; // back upper right
+   glm::vec3 backUL = (0.5f * glm::vec3((-5.0 * cos(angle)) + (5.0 * sin(angle)), 5.0 , (5.0 * sin(angle)) + (5.0 * cos(angle)))) + Box1Position; // back upper right
+   glm::vec3 backBL = (0.5f * glm::vec3((-5.0 * cos(angle)) + (5.0 * sin(angle)), -5.0 , (5.0 * sin(angle)) + (5.0 * cos(angle)))) + Box1Position;  // back upper right
+   glm::vec3 backBR = (0.5f * glm::vec3((5.0 * cos(angle)) + (5.0 * sin(angle)), -5.0 , (-5.0 * sin(angle)) + (5.0 * cos(angle)))) + Box1Position;  // back upper right
+   glm::vec3 frontUR = (0.5f * glm::vec3((5.0 * cos(angle)) + (-5.0 * sin(angle)), 5.0 , (-5.0 * sin(angle)) + (-5.0 * cos(angle)))) + Box1Position;  // back upper right
+   glm::vec3 frontUL = (0.5f * glm::vec3((-5.0 * cos(angle)) + (-5.0 * sin(angle)), 5.0 , (5.0 * sin(angle)) + (-5.0 * cos(angle)))) + Box1Position;  // back upper right
+   glm::vec3 frontBL = (0.5f * glm::vec3((-5.0 * cos(angle)) + (-5.0 * sin(angle)), -5.0 , (5.0 * sin(angle)) + (-5.0 * cos(angle)))) + Box1Position;  // back upper right
+   glm::vec3 frontBR = (0.5f * glm::vec3((5.0 * cos(angle)) + (-5.0 * sin(angle)), -5.0 , (-5.0 * sin(angle)) + (-5.0 * cos(angle)))) + Box1Position;  // back upper right
 
 
     Plane *squarebottom = new Plane (
@@ -413,17 +409,15 @@ void initialize()
     //--Add the above to the list of scene objects.
     sceneObjects.push_back(spheretransparent);
 
-    Sphere *sphererefract = new Sphere(glm::vec3(1.0, -14.0, -95.0), 6, glm::vec3(0.5, 0.1, 0.4));
+    Sphere *sphererefract = new Sphere(glm::vec3(1.0, -14.0, -105.0), 6, glm::vec3(0.5, 0.1, 0.4));
     //--Add the above to the list of scene objects.
     sceneObjects.push_back(sphererefract);
 
-
-
-    Cylinder *cyclinder = new Cylinder(glm::vec3(-10, -20.0, -115.0),2,8.0, glm::vec3(0.8, 0.1, 0.6));
+    Cylinder *cyclinder = new Cylinder(glm::vec3(-10, -20.0, -145.0),2.5,15.0, glm::vec3(0.8, 0.1, 0.6));
     //--Add the above to the list of scene objects.
     sceneObjects.push_back(cyclinder);
     
-    Cone *Cone1 = new Cone(glm::vec3(-10.0, -20.0, -90.0),6.0,8.0, glm::vec3(0.95, 0.66, 0.25));
+    Cone *Cone1 = new Cone(glm::vec3(-7.0, -20.0, -90.0),7.0,8.0, glm::vec3(0.95, 0.66, 0.25));
     //--Add the above to the list of scene objects.
     sceneObjects.push_back(Cone1);
     
@@ -431,12 +425,119 @@ void initialize()
     //--Add the above to the list of scene objects.
     sceneObjects.push_back(picturesphere);
     
+    
+    
+    
+   float angle2 = 0.0;
+   glm::vec3 Box1Position2 = glm::vec3(-18.0 , -17.5, -125.0);
+   
+   glm::vec3 backUR2 = (0.8f * glm::vec3((5.0 * cos(angle2)) + (5.0 * sin(angle2)) + (5*tan(-0.6)), 5.0 , (-5.0 * sin(angle2)) + (5.0 * cos(angle2)))) + Box1Position2; // back upper right
+   glm::vec3 backUL2 = (0.8f * glm::vec3((-5.0 * cos(angle2)) + (5.0 * sin(angle2)) + (5*tan(-0.6)), 5.0 , (5.0 * sin(angle2)) + (5.0 * cos(angle2)))) + Box1Position2; // back upper right
+   glm::vec3 backBL2 = (0.8f * glm::vec3((-5.0 * cos(angle2)) + (5.0 * sin(angle2)), -5.0 , (5.0 * sin(angle2)) + (5.0 * cos(angle2)))) + Box1Position2;  // back upper right
+   glm::vec3 backBR2 = (0.8f * glm::vec3((5.0 * cos(angle2)) + (5.0 * sin(angle2)), -5.0 , (-5.0 * sin(angle2)) + (5.0 * cos(angle2)))) + Box1Position2;  // back upper right
+   glm::vec3 frontUR2 = (0.8f * glm::vec3((5.0 * cos(angle2)) + (-5.0 * sin(angle2)) + (5*tan(-0.6)), 5.0 , (-5.0 * sin(angle2)) + (-5.0 * cos(angle2)))) + Box1Position2;  // back upper right
+   glm::vec3 frontUL2 = (0.8f * glm::vec3((-5.0 * cos(angle2)) + (-5.0 * sin(angle2)) + (5*tan(-0.6)), 5.0 , (5.0 * sin(angle2)) + (-5.0 * cos(angle2)))) + Box1Position2;  // back upper right
+   glm::vec3 frontBL2 = (0.8f * glm::vec3((-5.0 * cos(angle2)) + (-5.0 * sin(angle2)), -5.0 , (5.0 * sin(angle2)) + (-5.0 * cos(angle2)))) + Box1Position2;  // back upper right
+   glm::vec3 frontBR2 = (0.8f * glm::vec3((5.0 * cos(angle2)) + (-5.0 * sin(angle2)), -5.0 , (-5.0 * sin(angle2)) + (-5.0 * cos(angle2)))) + Box1Position2;  // back upper right
+
+
+    Plane *squarebottom2 = new Plane (
+    backBL2,
+    //Point A
+    frontBL2,
+    //Point B
+    frontBR2,
+    //Point C
+    backBR2,
+    //Point D
+    //Colour 1
+    glm::vec3(0.956, 0.85, 0.258));
+    //Colour 1
+    //Point D
+    sceneObjects.push_back(squarebottom2);
+
+    Plane *squaretop2 = new Plane (
+    backUL2,
+    //Point A
+    frontUL2,
+    //Point B
+    frontUR2,
+    //Point C
+    backUR2,
+    //Colour 1
+    glm::vec3(0.956, 0.85, 0.258));
+    //Colour 1
+    //Point D
+    sceneObjects.push_back(squaretop2);
+
+    Plane *squareback2 = new Plane (
+    backUR2,
+    //Point A
+    backUL2,
+    //Point B
+    backBL2,
+    //Point C
+    backBR2,
+    //Point D
+    //Colour 1
+    glm::vec3(0.956, 0.85, 0.258));
+    //Colour 1
+    //Point D
+    sceneObjects.push_back(squareback2);
+
+    Plane *squarefront2 = new Plane (
+    frontBL2,
+    //Point A
+    frontBR2,
+    //Point B
+    frontUR2,
+    //Point C
+    frontUL2,
+    //Point D
+    //Colour 1
+    glm::vec3(0.956, 0.85, 0.258));
+    //Colour 1
+    //Point D
+    sceneObjects.push_back(squarefront2);
+
+
+    Plane *squareleft2 = new Plane (
+    backBL2,
+    //Point A
+    frontBL2,
+    //Point B
+    frontUL2,
+    //Point C
+    backUL2,
+    //Point D
+    //Colour 1
+    glm::vec3(0.956, 0.85, 0.258));
+    //Colour 1
+    //Point D
+    sceneObjects.push_back(squareleft2);
+
+    Plane *squareright2 = new Plane (
+    backBR2,
+    //Point A
+    frontBR2,
+    //Point B
+    frontUR2,
+    //Point C
+    backUR2,
+    //Colour 1
+    glm::vec3(0.956, 0.85, 0.258));
+    //Colour 1
+    //Point D
+    sceneObjects.push_back(squareright2);
+    
+    
+    
+    
+    
 
 
 }
-// does box need spccular lighting?
-// how to make shadows lighter on spheres?
-// can I have multiple shapes for points?
+
 
 
 int main(int argc, char *argv[]) {
