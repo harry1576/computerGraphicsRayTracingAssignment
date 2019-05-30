@@ -300,12 +300,12 @@ void initialize()
     //Point D
     sceneObjects.push_back(plane);
 
-    glm::vec3 backUR = glm::vec3(18.0, -15.0, -115.0); // back upper right
-    glm::vec3 backUL = glm::vec3(13.0, -15.0, -115.0); // back upper left
+    glm::vec3 backUR = glm::vec3(18.0 + (5 * tan(0.52)), -15.0, -115.0); // back upper right
+    glm::vec3 backUL = glm::vec3(13.0 + (5 * tan(0.52)), -15.0, -115.0); // back upper left
     glm::vec3 backBL = glm::vec3(13.0, -20.0, -115.0); // back bottom left
     glm::vec3 backBR = glm::vec3(18.0, -20.0, -115.0); // back bottom right
-    glm::vec3 frontUR = glm::vec3(18.0, -15.0, -105.0);
-    glm::vec3 frontUL = glm::vec3(13.0, -15.0, -105.0);
+    glm::vec3 frontUR = glm::vec3(18.0 + (5 * tan(0.52)), -15.0, -105.0);
+    glm::vec3 frontUL = glm::vec3(13.0 + (5 * tan(0.52)), -15.0, -105.0);
     glm::vec3 frontBL = glm::vec3(13.0, -20.0, -105.0);//
     glm::vec3 frontBR = glm::vec3(18.0, -20.0, -105.0);//
 
