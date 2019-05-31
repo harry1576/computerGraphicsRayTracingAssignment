@@ -42,7 +42,7 @@ float Cone::intersect(glm::vec3 posn, glm::vec3 dir)
 	else{smallest = t1;}
 	
 	if(center.y + height > posn.y + (dir.y * smallest) && center.y < posn.y + (dir.y * smallest) ){return smallest;}
-	else{ return -1;} 
+	else{return -1;} 
 
 	 
 

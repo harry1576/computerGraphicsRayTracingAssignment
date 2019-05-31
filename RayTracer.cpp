@@ -39,7 +39,7 @@ float fogfinish = -60;
 float fogmax = 400.0f;
 bool fog = false;
 
-
+// g++ -Wall -o "%e" "%f" Plane.cpp Ray.cpp SceneObject.cpp Sphere.cpp Cylinder.cpp Cone.cpp TextureBMP.cpp  -lGL -lGLU -lglut
 //TextureBMP texture1;
 
 TextureBMP texture1 = TextureBMP((char*)"jupiter.bmp");
