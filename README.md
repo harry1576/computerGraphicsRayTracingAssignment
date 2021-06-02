@@ -18,6 +18,6 @@ This project was done for a 300 level University Computer Graphics Assignment.
 
 First ensure required libraries are installed.\
 Run the following command to build the program:\
-```make```
+```make``` \
 Then to run the program:\
-```./RayTracer.o```
+```./RayTracer.o``` \
