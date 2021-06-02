@@ -1,4 +1,5 @@
 # Ray-Tracer-Scene
+![scene](/images/raytracer.png)
 An implementation of a realistic scene that captures features such as:
 - Transparency
 - Refraction
@@ -6,9 +7,15 @@ An implementation of a realistic scene that captures features such as:
 - Rotation 
 - Reflection
 - Textures 
-- Specular Highlights\
+- Specular Highlights </a>
 More details can be found in the [report](docs/report.pdf).
 
-# How to Run the program:
-''' g++ -Wall -o "%e" "%f" Plane.cpp Ray.cpp SceneObject.cpp Sphere.cpp
-Cylinder.cpp Cone.cpp TextureBMP.cpp -lGL -lGLU -lglut '''
+# How to Build and Run the program:
+Run the following command (first ensure required libraries are installed)
+to build the program:
+```make```
+Then to run the program:
+```./RayTracer.o```
+
+
+
