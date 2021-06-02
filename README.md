@@ -1,5 +1,9 @@
 # Ray-Tracer-Scene
-![scene](/images/raytracer.png)
+
+
+![scene](/images/raytracer.png) 
+
+
 An implementation of a realistic scene that captures features such as:
 - Transparency
 - Refraction
