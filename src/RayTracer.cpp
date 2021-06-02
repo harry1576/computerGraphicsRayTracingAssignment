@@ -79,8 +79,6 @@ glm::vec3 trace(Ray ray, int step)
     materialCol = sceneObjects[ray.xindex]->getColor(); //else return object's colour
 
 
-   // if(ray.xpt.y > 0){std::cout << ray_y << endl;}
-
     if(ray.xindex == 1)
     {
         int ray_x = ((ray.xpt.x)/4)+10;
@@ -163,14 +161,11 @@ glm::vec3 trace(Ray ray, int step)
     }
 
 
-
-
     if(ray.xindex == 8)
     {
 
         Ray throughRay(ray.xpt, ray.dir);
         throughRay.closestPt(sceneObjects);
-
 
         if(throughRay.xindex == 8)
         {
@@ -181,12 +176,9 @@ glm::vec3 trace(Ray ray, int step)
         }
         else
         {
-
-        if(throughRay.xindex == -1){return backgroundCol;}
-        else{objectColor = trace(throughRay,1) + (objectColor * 0.25f);}
+			if(throughRay.xindex == -1){return backgroundCol;}
+			else{objectColor = trace(throughRay,1) + (objectColor * 0.25f);}
         }
-
-
 
     }
     
@@ -203,7 +195,6 @@ glm::vec3 trace(Ray ray, int step)
 	}
     
     
-
     if(fog){
         float fogDist = -ray.xpt.z - fogstart;
         objectColor.x += (fogDist/fogmax)*(1 - objectColor.x);
@@ -214,10 +205,6 @@ glm::vec3 trace(Ray ray, int step)
     }
 
     return objectColor;
-
-
-
-
 
 }
 
@@ -530,12 +517,6 @@ void initialize()
     //Point D
     sceneObjects.push_back(squareright2);
     
-    
-    
-    
-    
-
-
 }
 
 
@@ -543,16 +524,14 @@ void keyBoard (unsigned char key, int x, int y)
 {
     if (key == 'f')
     {
-			fog = true;
-			glutPostRedisplay();
+		fog = true;
+		glutPostRedisplay();
     }
     else if (key == 'c')
     {
-			fog = false;
-			glutPostRedisplay();
+		fog = false;
+		glutPostRedisplay();
     }
-    
-
 }
 
 
@@ -570,7 +549,7 @@ int main(int argc, char *argv[]) {
     initialize();
 	glutKeyboardFunc(keyBoard);
 
-
+	
     glutMainLoop();
     return 0;
 }
