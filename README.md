@@ -20,4 +20,4 @@ First ensure required libraries are installed.\
 Run the following command to build the program:\
 ```make``` \
 Then to run the program:\
-```./RayTracer.o``` \
+```./RayTracer.o``` 
