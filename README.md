@@ -16,7 +16,7 @@ An implementation of a realistic scene that captures features such as:
 
 More details can be found in the [report](docs/report.pdf).
 
-# How to Build and Run the program:
+# How to Build and Run the Program:
 
 First ensure required libraries are installed.
 
