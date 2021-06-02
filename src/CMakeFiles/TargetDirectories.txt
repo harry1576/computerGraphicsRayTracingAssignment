@@ -1,3 +1,0 @@
-/home/harry/Desktop/Ray-Tracing-Scene/src/CMakeFiles/rebuild_cache.dir
-/home/harry/Desktop/Ray-Tracing-Scene/src/CMakeFiles/edit_cache.dir
-/home/harry/Desktop/Ray-Tracing-Scene/src/CMakeFiles/RayTracer.o.dir
