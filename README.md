@@ -12,14 +12,27 @@ An implementation of a realistic scene that captures features such as:
 - Reflection
 - Textures 
 - Specular Highlights </a>
+
+
 More details can be found in the [report](docs/report.pdf).
 
 # How to Build and Run the program:
-Run the following command (first ensure required libraries are installed)
-to build the program:
+
+
+First ensure required libraries are installed.
+
+
+Run the following command to build the program:
+
 ```make```
+
+
 Then to run the program:
+
+
 ```./RayTracer.o```
+
+
 
 
 
