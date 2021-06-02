@@ -14,6 +14,7 @@ An implementation of a realistic scene that captures features such as:
 - Specular Highlights </a>
 
 More details can be found in the [report](docs/report.pdf).
+
 This project was done for a 300 level University Computer Graphics Assignment. 
 
 # How to Build and Run the Program:
