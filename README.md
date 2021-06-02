@@ -7,4 +7,4 @@ An implementation of a realistic scene that captures features such as:
 - Reflection
 - Textures 
 - Specular Highlights
-More details can be found in the [report](report/CONTRIBUTING.md)
+More details can be found in the [report](docs/report.pdf)
